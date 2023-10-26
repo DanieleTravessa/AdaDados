@@ -5,12 +5,14 @@ produto =''
 bebidas = []
 pratos = []
 
+#-----------------------------------------------Menu Cardápio---------------------------------------------
+#--------------------------------------Adicionar no Menu do Restaurante-----------------------------------
 
 def menu_cardapio():
   print("*"*30)
   print('* Escolha uma opção: '+' '*8 + '*')
   print('* 1. Exibir Cardápio.'+' '*8 + '*')
-  print('* 2. Cadastrar novos itens:  *')
+  print('* 2. Cadastrar novos itens.  *')
   print('* 3. Sair '+' '*19 + '*')
   print("*"*30)
   opcao = input(' ')
@@ -18,8 +20,9 @@ def menu_cardapio():
     imprime_cardapio()
   elif opcao == '2':
     cadastra_item()
-  #elif opcao == '3':
+  elif opcao == '3':
   #menuprincipal
+    print('Obrigada por sua visita!')
   else:
     print('\nOpção Inválida! Tente novamente!\n')
     menu_cardapio()
@@ -65,13 +68,13 @@ def informa_dados_item(cardapio):
       os.system('cls')
       menu_cardapio()
     else:
-      preco = input('Digite o valor do produto. R$')
+      preco = input('* Digite o valor do produto. R$')
       cardapio.append( item )
       cardapio.append( produto )
       cardapio.append( preco )
       item += 1
-      print('Produto cadastrado com sucesso!')
-      outroProduto = input('Deseja cadastrar outro produto? S/N ')
+      print('\nProduto cadastrado com sucesso!\n')
+      outroProduto = input('Deseja cadastrar outro produto? S/N \n')
       if outroProduto.lower() != 's':
         menu_cardapio()          
   return cardapio
@@ -114,4 +117,87 @@ def imprime_cardapio():
     else:
       print(" "*10 + '\nObrigada pela sua visita!\n')
 
+
+#-----------------------------------------------Pedido---------------------------------------------------
+#----------------------------------Adicionar no Menu do Cliente-------------------------------------------
+
+carrinho = []
+itemCarrinho = []
+totalDaCompra = 0
+def menu_pedido():
+  print("*"*30); print('* Escolha uma opção: '+' '*8 + '*'); 
+  print('* 1. Exibir Cardápio.'+' '*8 + '*'); print('* 2. Novo pedido.'+' '*10 + '  *'); 
+  print('* 3. Montar Combo.'+' '*11 + '*')
+  print('* 4. Consultar Carrinho'+' '*6 + '*')
+  print('* 5. Sair '+' '*19 + '*'); print("*"*30)
+  opcao = input(' ')
+  if opcao == '1':
+    imprime_cardapio()
+    menu_pedido()
+  elif opcao == '2':
+    escolhe_produto()
+  elif opcao == '3':
+    monta_combo()
+  elif opcao == '4':
+    print(carrinho)
+    print(totalDaCompra)
+  elif opcao == '5':
+    print('Obrigada pela sua visita!')
+
+def escolhe_produto():
+  carrinho = []
+  novoProduto = ''
+  bebida_prato = input('Gostaria de adicionar uma bebida[b] ou prato[p]? ')
+  if bebida_prato.lower() == 'b':
+    print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Bebidas '+'*'*4); print(" "*10 + "*"*30)
+    for i in range(0,len(bebidas),3):
+      print(' '*10 + f'{bebidas[i]} - {bebidas[i+1]}: R${bebidas[i+2]}')
+    print("*"*30); print('*'*5+' Escolhendo Bebidas '+'*'*4); print("*"*30)
+    informa_dados_carrinho(bebidas)
+    for items in range(len(itemCarrinho)):
+      carrinho.append(items) 
+    while novoProduto.lower() == 's':
+      escolha = int(input('Adicione uma bebida ao carrinho: '))
+      item=()
+      carrinho.append( bebidas[(escolha-1)*3] )
+      novoProduto = input('Deseja inserir outro produto? S/N ')
+    print('Item adicionado ao carrinho com sucesso!')
+    escolhe_produto()  
+  elif bebida_prato.lower() == 'p':
+    print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Pratos '+'*'*5); print(" "*10 + "*"*30)
+    for i in range(0,len(pratos),3):
+      print(' '*10 + f'{pratos[i]} - {pratos[i+1]}: R${pratos[i+2]}')
+    print("*"*30); print('*'*5+' Escolhendo Bebidas '+'*'*4); print("*"*30)
+    informa_dados_carrinho(pratos)
+    for items in range(len(itemCarrinho)):
+      carrinho.append(items) 
+    while novoProduto.lower() == 's':
+      escolha = int(input('Adicione um prato ao carrinho: '))
+      item=()
+      carrinho.append( pratos[(escolha-1)*3])
+      novoProduto = input('Deseja inserir outro produto? S/N ')    
+    print('Item adicionado ao carrinho com sucesso!')
+    escolhe_produto()
+  for i in range(3,len(carrinho),3):
+      totalDaCompra += i          
+  print(carrinho)
+  print(totalDaCompra) 
+
+def informa_dados_carrinho(item):
+  print("*"*50); print('* Insira o numero do item ou digite # para sair  *'); print("*"*50)
+  produtoEscolhido = (input('* Digite o número do item: '))  
+  if produtoEscolhido == '#':      
+    menu_pedido()
+  else:
+    produtoEscolhido = int(produtoEscolhido)      
+    itemCarrinho.append( item[((produtoEscolhido-1)*3)] )
+    itemCarrinho.append( item[(((produtoEscolhido-1)*3)+1)] )
+    itemCarrinho.append( item[(((produtoEscolhido-1)*3)+2)] )
+    print('\nProduto adicionado com sucesso!\n')
+    novoProduto = input('Deseja inserir outro produto? S/N ')
+    if novoProduto.lower() != 's':
+      print(itemCarrinho)          
+  return itemCarrinho
+
 menu_cardapio()
+menu_pedido()    
