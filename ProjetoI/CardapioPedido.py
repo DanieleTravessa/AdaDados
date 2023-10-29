@@ -18,14 +18,13 @@ restaurantes = ['cozinha', 'pratobom', 'fomenao']
 crestaurante = ''
 cardapiobebida =[]
 cardapiocompleto = []
-cardapiorestaurante = []
 cardapiopratos = []
+
   
 def menu_cardapio():
   limpa_tela()
-  crestaurante = input('informe o nome do restaurante: ')
-  consulta_restaurante()
-  
+
+  #consulta_restaurante()
   
   print("*"*30)
   print('* Escolha uma opção: '+' '*8 + '*')
@@ -48,6 +47,8 @@ def menu_cardapio():
 
 def cadastra_item():
   
+  indice = consulta_restaurante()
+    
   print("*"*30)
   print('* Escolha uma opção: '+' '*8 + '*')
   print('* 1. Cadastrar Bebidas'+' '*7 + '*')
@@ -56,6 +57,7 @@ def cadastra_item():
   print("*"*30)
   opcao = input(' ')
   if opcao == '1':
+    limpa_tela()
     print("*"*30)
     print('*'*5+' Cadastro de Bebidas '+'*'*4)
     print("*"*30)
@@ -63,21 +65,26 @@ def cadastra_item():
     informa_dados_item(bebidas)        
     for bebida in range(len(bebidas)):
      cardapiobebida.append(bebida)
-    cardapiocompleto.append(cardapiobebida)    
+    #cardapiocompleto.append(bebida)
+    cardapiocompleto.append(cardapiobebida)
+    print(cardapiocompleto)   
             
   elif opcao == '2':
+    if len(cardapiocompleto) < indice+1:
+      print('Cadastre bebidas antes de cadastrar os pratos!')
+      cadastra_item()
+    limpa_tela()
     print("*"*30)
     print('*'*5+' Cardastro de Pratos '+'*'*5)
     print("*"*30)
     informa_dados_item(pratos)
-    for prato in range(len(pratos)):
-     cardapiopratos.append(prato)
-    cardapiocompleto.append(prato)    
+    #for prato in range(len(pratos)):
+    cardapiocompleto.append(pratos)   
   elif opcao == '3':
     menu_cardapio()
     #estabelecimento
-  cardapiorestaurante = cardapiocompleto[:]
-  return
+  
+  return cardapiocompleto
 
 
       #-------------------------testes---------------------------------
@@ -93,7 +100,7 @@ def cadastra_item():
 
 
 def informa_dados_item(cardapio):
-  limpa_tela()
+ 
   produto =''
   item = 1
   outroProduto = 's'
@@ -118,9 +125,9 @@ def informa_dados_item(cardapio):
   return cardapio
 
 def imprime_cardapio():
-    consulta_restaurante()
+    indice = consulta_restaurante()
     limpa_tela()
-    restaurante = input('informe o nome do restaurante')
+   
     print("*"*50); print(' '*5 + '* Escolha a opção para exibir o cardápio: ' + '*')
     print('     *     1. Cardápio de Bebidas'+' '*14 + '*')
     print('     *     2. Cardápio de Pratos'+' '*15+'*')
@@ -129,22 +136,22 @@ def imprime_cardapio():
     print('     *     5. Sair '+' '*28 + '*'); print("*"*50)
     pagina = input(' ')
     if pagina == '1':
-      print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Bebidas '+'*'*4); print(" "*10 + "*"*30)
-      
-      for i in range(len(cardapiobebida)):
-        print(' '*10 + f'{bebidas[i]} - {bebidas[i+1]}: R${bebidas[i+2]}\n')
+      if len(cardapiocompleto) >= (indice*2):
+        print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Bebidas '+'*'*4); print(" "*10 + "*"*30)
+        print(' '*10 + f'{cardapiocompleto[indice*2]} - {cardapiocompleto[indice*2+1]}: R${cardapiocompleto[indice*2+2]}\n')
     elif pagina == '2':
-      print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Pratos '+'*'*5); print(" "*10 + "*"*30)
-      for i in range(0,len(pratos),3):
+      if len(cardapiocompleto) >= (indice*2):
+        print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Pratos '+'*'*5); print(" "*10 + "*"*30)
         print(' '*10 + f'{pratos[i]} - {pratos[i+1]}: R${pratos[i+2]}')
     elif pagina == '3':
-      print(f'{cardapiocompleto[indice*2:(indice*2)+2]}')
-      print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Bebidas '+'*'*4); print(" "*10 + "*"*30)
-      for i in range(0,len(bebidas),3):
-        print(' '*10 + f'{bebidas[i]} - {bebidas[i+1]}: R${bebidas[i+2]}')
-      print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Pratos '+'*'*5); print(" "*10 + "*"*30)
-      for i in range(0,len(pratos),3):
-        print(' '*10 + f'{pratos[i]} - {pratos[i+1]}: R${pratos[i+2]}')           
+      if len(cardapiocompleto) >= (indice*2):
+        print(f'{cardapiocompleto[indice*2:(indice*2)+2]}')
+        print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Bebidas '+'*'*4); print(" "*10 + "*"*30)
+        for i in range(0,len(bebidas),3):
+          print(' '*10 + f'{bebidas[i]} - {bebidas[i+1]}: R${bebidas[i+2]}')
+          print(" "*10 + "*"*30); print(" "*10 + '*'*5+' Cardápio de Pratos '+'*'*5); print(" "*10 + "*"*30)
+        for i in range(0,len(pratos),3):
+          print(' '*10 + f'{pratos[i]} - {pratos[i+1]}: R${pratos[i+2]}')           
     elif pagina == '4':
       menu_cardapio()
     elif pagina == '5':
@@ -160,7 +167,7 @@ def imprime_cardapio():
       print(" "*10 + '\nObrigada pela sua visita!\n')
       
 def consulta_restaurante():
-  
+  crestaurante = input('Informe o nome do restaurante: ')
   if crestaurante in restaurantes:
     indice = restaurantes.index(crestaurante)
     print(indice)  
