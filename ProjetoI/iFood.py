@@ -1,13 +1,13 @@
-from manipulate_data import load_json_file, save_json_file
+#from manipulate_data import load_json_file, save_json_file
 
 # Inicialização das listas de clientes e restaurantes
-clientes = load_json_file("cadastro", "cliente")
-if clientes is None:
-    clientes = []
+#clientes = load_json_file("cadastro", "cliente")
+#if clientes is None:
+#    clientes = []
 
-restaurantes = load_json_file("cadastro", "restaurante")
-if restaurantes is None:
-    restaurantes = []
+#restaurantes = load_json_file("cadastro", "restaurante")
+#if restaurantes is None:
+#    restaurantes = []
 
 def validar_nome_cliente():
     while True:
@@ -121,9 +121,9 @@ def menu_gerenciar_clientes():
 ###########################################################################################################################################################################
 
 # Inicialização da lista de restaurantes
-restaurantes = load_json_file("cadastro", "restaurante")
-if restaurantes is None:
-    restaurantes = []
+#restaurantes = load_json_file("cadastro", "restaurante")
+#if restaurantes is None:
+#    restaurantes = []
 
 def validar_nome_proprietario():
     while True:
@@ -228,6 +228,8 @@ def perfil_restaurante():
             print("E-mail:", restaurante[4])
             print("Número de Funcionários:", restaurante[5])
             print("Endereço do Restaurante (Latitude, Longitude):", restaurante[6])
+            #cardapio acessarCardapio = input('Acesse o Menu de Cardápio digitando 1 !')
+            #if acessarCardapio == '1': menu_cardapio(restaurante[1])
             return
     print("Restaurante não encontrado.")
 
@@ -247,7 +249,7 @@ def menu_gerenciar_restaurantes():
             cadastrar_restaurante()
         elif opcao == '2':
             perfil_restaurante()
-        elif opcao == '3':
+        elif opcao == '3':        
             menu_cardapio()
         elif opcao == '4':
             pass
