@@ -6,9 +6,6 @@ import psycopg2
 import csv
 import os
 
-cwd = os.getcwd()  # Get the current working directory (cwd)
-files = os.listdir(cwd)  # Get all the files in that directory
-
 conn = psycopg2.connect("host=localhost dbname=projeto_olimpicgames_danieletravessa user=postgres password=1234")
 qry = conn.cursor()
 
@@ -21,6 +18,9 @@ qry.execute("""
         CONSTRAINT unique_noc_region UNIQUE (noc, region)
     );
 """)
+
+cwd = os.getcwd()  # Get the current working directory (cwd)
+files = os.listdir(cwd)  # Get all the files in that directory
 
 try:
     with open('ModuloIII\\ProjetoFinal\\noc_regions.csv', 'r', encoding='utf-8') as file:
